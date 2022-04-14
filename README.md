@@ -11,7 +11,7 @@ sub=1 vmess  uuid
 Pagermaid
 pagermaid一键脚本:wget https://gitlab.com/Xtao-Labs/pagermaid-modify/-/raw/master/install.sh -O install.sh&& chmod +x install.sh && bash install.sh
 
-git clone https://github.com/andymccurdy/redis-py
+git clone https://github.com/andymccurdy/redis-py  
 cd redis-py/
  
 python3 setup.py install   // redis组建安装
