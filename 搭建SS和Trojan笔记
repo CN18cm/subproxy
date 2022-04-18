@@ -1,0 +1,59 @@
+//shadowsocks服务搭建笔记
+//debian的系统内安装工具apt
+--------------------------------
+安装shadowsocks：
+apt install shadowsocks-libev
+查看shadowsocks状态：
+systemctl status shadowsocks-libev.service
+编辑ss配置文件：
+vim /etc/shadowsocks-libev/config.json
+重启shadowsocks：
+systemctl restart shadowsocks-libev.service
+查看shadowsocks运行日志：
+journalctl -u shadowsocks-libev.service -f
+防火墙设置：
+查看状态：ufw status
+开放端口：ufw allow 8388
+拒绝端口：ufw deny 8388
+删除规则：ufw delete allow 8388
+关闭防火墙：ufw disable
+启动防火墙：ufw enable
+------------------------------
+//shadowsocks-libev是C语言写的服务，是shadowsocks的升级版，目前还在维护，已经被内置在源里面了，因此可以直接apt install
+安装好服务后，在/etc/shadowsocks-libev/中创建config.json文件，修改里面的服务器参数，运行服务之后，在客户端填入相应的参数就能FQ了//
+
+//trojan服务搭建笔记
+//debian中安装的
+trojan配置文件：
+{
+    "run_type": "server",
+    "local_addr": "0.0.0.0",
+    "local_port": 443,
+    "remote_addr": "192.83.167.78",
+    "remote_port": 80,
+    "password": [
+        "your_awesome_password"
+    ],
+    "ssl": {
+        "cert": "server.crt",
+        "key": "server.key"
+    }
+}
+申请证书：
+    安装acme：curl https://get.acme.sh | sh
+    安装socat：apt install socat
+    添加软链接：ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
+    注册账号： acme.sh --register-account -m my@example.com
+    开放80端口：ufw allow 80
+    申请证书： acme.sh  --issue -d 你的域名  --standalone -k ec-256
+    安装证书： acme.sh --installcert -d 你的域名 --ecc  --key-file   /root/trojan/server.key   --fullchain-file /root/trojan/server.crt 
+ 
+    如果默认CA无法颁发，则可以切换下列CA：
+    切换 Let’s Encrypt：acme.sh --set-default-ca --server letsencrypt
+    切换 Buypass：acme.sh --set-default-ca --server buypass
+    切换 ZeroSSL：acme.sh --set-default-ca --server zerossl
+自签证书：
+    生成私钥：openssl ecparam -genkey -name prime256v1 -out ca.key
+    生成证书：openssl req -new -x509 -days 36500 -key ca.key -out ca.crt  -subj "/CN=bing.com"
+//首先在/root中创建trojan文件夹并cd进去，然后在github中trojan-go(https://github.com/p4gefau1t/trojan-go)的文件下载下来 wget 安装链接 得到安装包.zip
+
