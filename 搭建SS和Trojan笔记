@@ -56,4 +56,6 @@ trojan配置文件：
     生成私钥：openssl ecparam -genkey -name prime256v1 -out ca.key
     生成证书：openssl req -new -x509 -days 36500 -key ca.key -out ca.crt  -subj "/CN=bing.com"
 //首先在/root中创建trojan文件夹并cd进去，然后在github中trojan-go(https://github.com/p4gefau1t/trojan-go)的文件下载下来 wget 安装链接 得到安装包.zip
+解压命令用unzip 该文件名.zip，将trojan-go的服务安装在trojan文件夹内。touch一个config.json文件，并将配置文件复制进去，修改相关的参数。接下来申请证书和秘钥，最终用
+./trojan-go 运行该服务，ctrl+z会将该服务暂停，因此需要jobs命令，用bg将该服务挂载在后台运行即可//
 
