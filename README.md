@@ -13,7 +13,6 @@ pagermaid一键脚本:wget https://gitlab.com/Xtao-Labs/pagermaid-modify/-/raw/m
 
 git clone https://github.com/andymccurdy/redis-py  
 cd redis-py/
- 
 python3 setup.py install   // redis组建安装
 
 bash <(curl -fsSL git.io/warp.sh) d   /warp安装一件脚本
